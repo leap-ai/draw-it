@@ -17,7 +17,13 @@ const Canvas: React.FC<CanvasProps> = (props) => {
   const drawing = useRef<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isPolling, setIsPolling] = useState(false);
-  const [images, setImages] = useState<RemixImage[]>([]);
+  const [images, setImages] = useState<RemixImage[]>([
+    {
+      id: "1",
+      uri: "https://static.tryleap.ai/edit-image-gen-426981c6-c909-4880-8e97-31b7fb294fb9/generated_images/1.png",
+      createdAt: new Date().toString(),
+    },
+  ]);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -30,7 +36,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
         ctx.fillRect(0, 0, props.width, props.height);
       }
     }
-  }, [props.height, props.width]);
+  }, [props.height, props.width, images]);
 
   const getMousePos = (e: MouseEvent, canvas: HTMLCanvasElement) => {
     const rect = canvas.getBoundingClientRect();
@@ -71,6 +77,11 @@ const Canvas: React.FC<CanvasProps> = (props) => {
   };
 
   const handleMouseUp = (_e: MouseEvent) => {
+    if (drawing.current) {
+      drawing.current = false;
+    }
+  };
+  const handleMouseLeave = (_e: MouseEvent) => {
     if (drawing.current) {
       drawing.current = false;
     }
@@ -160,13 +171,6 @@ const Canvas: React.FC<CanvasProps> = (props) => {
 
   const clearCanvas = () => {
     setImages([]);
-    if (canvasRef.current) {
-      const ctx = canvasRef.current.getContext("2d");
-      if (ctx) {
-        // ctx.fillStyle = "white";
-        ctx.fillRect(0, 0, props.width, props.height);
-      }
-    }
   };
 
   if (images.length > 0) {
@@ -192,6 +196,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
         className="bg-gray-100 rounded-sm p-2 cursor-crosshair"
       ></canvas>
       <div className="flex gap-2">

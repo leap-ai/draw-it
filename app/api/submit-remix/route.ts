@@ -5,7 +5,7 @@ export const runtime = "edge";
 async function createFormData(image: File) {
   const formData = new FormData();
   formData.append("files", image);
-  formData.append("prompt", "An 8k photo of an animal");
+  formData.append("prompt", "A modern living room");
   formData.append("mode", "scribble");
   formData.append("numberOfImages", "4");
 
