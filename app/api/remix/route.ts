@@ -7,7 +7,7 @@ async function createFormData(image: File) {
   formData.append("files", image);
   formData.append("prompt", "An 8k photo of an animal");
   formData.append("mode", "scribble");
-  formData.append("numberOfImages", "2");
+  formData.append("numberOfImages", "4");
 
   return formData;
 }

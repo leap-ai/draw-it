@@ -141,7 +141,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 w-full max-w-lg">
       <canvas
         ref={canvasRef}
         width={props.width}
