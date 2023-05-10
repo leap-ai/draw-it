@@ -149,7 +149,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        className="bg-gray-100 rounded-sm p-2"
+        className="bg-gray-100 rounded-sm p-2 cursor-crosshair"
       ></canvas>
       <div className="flex gap-2">
         <button
