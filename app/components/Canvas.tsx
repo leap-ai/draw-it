@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useRef, MouseEvent, useEffect, useState } from "react";
+import React, {
+  useRef,
+  MouseEvent,
+  TouchEvent,
+  useEffect,
+  useState,
+} from "react";
 import axios from "axios";
 import { RemixImage, RemixResponse } from "@/types/remix.type";
 import Spinner from "./ui/Spinner";
@@ -85,6 +91,54 @@ const Canvas: React.FC<CanvasProps> = (props) => {
     if (drawing.current) {
       drawing.current = false;
     }
+  };
+
+  const handleTouchStart = (e: TouchEvent) => {
+    if (!canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    const touchPos = getTouchPos(e, canvas);
+
+    if (ctx) {
+      ctx.beginPath();
+      ctx.moveTo(touchPos.x, touchPos.y);
+      drawing.current = true;
+    }
+
+    e.preventDefault();
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    if (!drawing.current || !canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    const touchPos = getTouchPos(e, canvas);
+
+    if (ctx) {
+      ctx.lineTo(touchPos.x, touchPos.y);
+      ctx.stroke();
+    }
+
+    e.preventDefault();
+  };
+
+  const handleTouchEnd = (_e: TouchEvent) => {
+    if (drawing.current) {
+      drawing.current = false;
+    }
+  };
+
+  const getTouchPos = (e: TouchEvent, canvas: HTMLCanvasElement) => {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    return {
+      x: (e.touches[0].clientX - rect.left) * scaleX,
+      y: (e.touches[0].clientY - rect.top) * scaleY,
+    };
   };
 
   const canvasToBlob = (): Promise<Blob> => {
@@ -197,6 +251,9 @@ const Canvas: React.FC<CanvasProps> = (props) => {
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         className="bg-gray-100 rounded-sm p-2 cursor-crosshair"
       ></canvas>
       <div className="flex gap-2">
