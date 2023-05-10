@@ -12,46 +12,6 @@ async function createFormData(image: File) {
   return formData;
 }
 
-async function pollRemixStatus(modelId: string, remixId: string): Promise<any> {
-  const apiUrl = `https://api.tryleap.ai/api/v1/images/models/${modelId}/remix/${remixId}`;
-  const pollInterval = 3000;
-
-  return new Promise(async (resolve, reject) => {
-    const checkStatus = async () => {
-      console.log("CHECKING STATUS");
-      try {
-        const response = await fetch(apiUrl, {
-          headers: {
-            Authorization: `Bearer ${process.env.LEAP_API_KEY}`,
-          },
-        });
-
-        if (!response.ok) {
-          reject(`Polling request failed with status ${response.status}`);
-          return;
-        }
-
-        const jsonResponse = await response.json();
-        const status = jsonResponse.status;
-
-        if (status === "finished" || status === "failed") {
-          resolve(jsonResponse);
-        } else if (status === "queued" || status === "processing") {
-          setTimeout(checkStatus, pollInterval);
-        } else {
-          reject("Unexpected status value");
-        }
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          reject(error.message);
-        }
-      }
-    };
-
-    checkStatus();
-  });
-}
-
 async function postImageToApi(formData: FormData) {
   const modelId = "1e7737d7-545e-469f-857f-e4b46eaa151d";
   const apiUrl = `https://api.tryleap.ai/api/v1/images/models/${modelId}/remix`;
@@ -75,11 +35,13 @@ async function postImageToApi(formData: FormData) {
     throw new Error("Remix ID not found in API response");
   }
 
-  return pollRemixStatus(modelId, remixId);
+  return remixId;
 }
 
 export async function POST(request: Request) {
   // Get the incoming image from form data
+  console.log("SUBMIT");
+
   const incomingFormData = await request.formData();
   const image = incomingFormData.get("image") as File | null;
 
@@ -90,10 +52,10 @@ export async function POST(request: Request) {
     );
   }
 
-  let jsonResponse;
+  let remixId;
   try {
     const formData = await createFormData(image);
-    jsonResponse = await postImageToApi(formData);
+    remixId = await postImageToApi(formData);
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error(
@@ -104,5 +66,5 @@ export async function POST(request: Request) {
     }
   }
 
-  return NextResponse.json(jsonResponse);
+  return NextResponse.json({ remixId });
 }

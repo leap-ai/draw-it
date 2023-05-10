@@ -16,6 +16,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const drawing = useRef<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isPolling, setIsPolling] = useState(false);
   const [images, setImages] = useState<RemixImage[]>([]);
 
   useEffect(() => {
@@ -93,26 +94,68 @@ const Canvas: React.FC<CanvasProps> = (props) => {
 
   const submitImage = async () => {
     setIsLoading(true);
+    console.log("CLICK");
     try {
       const blob = await canvasToBlob();
       let formData = new FormData();
       formData.append("image", blob);
-      const response = await axios.post<RemixResponse>(props.apiUrl, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
 
-      if (response.data.images.length === 0) {
+      const response = await axios.post<{ remixId: string }>(
+        `/api/submit-remix`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      const remixId = response.data.remixId;
+      if (!remixId) {
         alert("Something went wrong. Please try again.");
+      } else {
+        // Start polling for status
+        const modelId = "1e7737d7-545e-469f-857f-e4b46eaa151d";
+        setIsPolling(true);
+        setIsLoading(false);
+        pollRemixStatus(modelId, remixId);
       }
-      setImages(response.data.images);
-
-      // Handle the API response here
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error("Error while submitting the form data:", error.message);
       }
+      setIsLoading(false);
     }
-    setIsLoading(false);
+  };
+
+  // Add these lines inside Canvas component, after the `submitImage` function
+  const pollRemixStatus = async (modelId: string, remixId: string) => {
+    const pollInterval = 3000;
+
+    const checkStatus = async () => {
+      try {
+        const response = await axios.get<RemixResponse>(
+          `/api/check-remix-status?modelId=${modelId}&remixId=${remixId}`
+        );
+
+        const status = response.data.status;
+        console.log({ status });
+
+        if (status === "finished" || status === "failed") {
+          setImages(response.data.images);
+          setIsPolling(false);
+        } else if (status === "queued" || status === "processing") {
+          setTimeout(checkStatus, pollInterval);
+        } else {
+          console.error("Unexpected status value");
+        }
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error("Error while polling for remix status:", error.message);
+        }
+        setIsPolling(false);
+      }
+    };
+
+    checkStatus();
   };
 
   const clearCanvas = () => {
@@ -156,9 +199,9 @@ const Canvas: React.FC<CanvasProps> = (props) => {
           onClick={submitImage}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
         >
-          {isLoading ? <Spinner /> : "Submit"}
+          {isLoading || isPolling ? <Spinner /> : "Submit"}
         </button>
-        {!isLoading && (
+        {!isLoading && !isPolling && (
           <button
             onClick={clearCanvas}
             className="bg-gray-300 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
