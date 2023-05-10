@@ -23,6 +23,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
   const drawing = useRef<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isPolling, setIsPolling] = useState(false);
+  const [isTouching, setIsTouching] = useState(false);
   const [images, setImages] = useState<RemixImage[]>([
     {
       id: "1",
@@ -43,6 +44,16 @@ const Canvas: React.FC<CanvasProps> = (props) => {
       }
     }
   }, [props.height, props.width, images]);
+
+  useEffect(() => {
+    const handleScroll = (e: Event) => {
+      if (isTouching) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener("touchmove", handleScroll, { passive: false });
+  }, [isTouching]);
 
   const getMousePos = (e: MouseEvent, canvas: HTMLCanvasElement) => {
     const rect = canvas.getBoundingClientRect();
@@ -96,6 +107,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
   const handleTouchStart = (e: TouchEvent) => {
     if (!canvasRef.current) return;
 
+    setIsTouching(true);
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const touchPos = getTouchPos(e, canvas);
@@ -128,6 +140,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
     if (drawing.current) {
       drawing.current = false;
     }
+    setIsTouching(false);
   };
 
   const getTouchPos = (e: TouchEvent, canvas: HTMLCanvasElement) => {
