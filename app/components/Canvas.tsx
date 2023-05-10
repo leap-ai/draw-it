@@ -24,13 +24,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isPolling, setIsPolling] = useState(false);
   const [isTouching, setIsTouching] = useState(false);
-  const [images, setImages] = useState<RemixImage[]>([
-    {
-      id: "1",
-      uri: "https://static.tryleap.ai/edit-image-gen-426981c6-c909-4880-8e97-31b7fb294fb9/generated_images/1.png",
-      createdAt: new Date().toString(),
-    },
-  ]);
+  const [images, setImages] = useState<RemixImage[]>([]);
 
   useEffect(() => {
     if (canvasRef.current) {
