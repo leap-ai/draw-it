@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <>
       <Container maxW="container.lg" mb={16}>
-        <VStack align="center" py={16} gap={4}>
+        <VStack align="center" py={8} gap={4}>
           <Heading size={"lg"}>Draw It</Heading>
           <Text textAlign={"center"}>
             Draw something and our AI will generate an image based on your
