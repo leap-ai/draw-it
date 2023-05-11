@@ -16,7 +16,7 @@ You can try out DrawIt with the live demo at [drawit.art](https://drawit.art/).
 
 ## Leap API
 
-Leap is an AI platform that offers a wide range of AI APIs, including the Remix API, which is used in the DrawIt app. To get started, sign up for an API key at [Leap.ai](https://leap.ai/). After registering, access the Leap Dashboard and retrieve your API key.
+Leap is an AI platform that offers a wide range of AI APIs, including the Remix API, which is used in the DrawIt app. To get started, sign up for an API key at [Leap](https://tryleap.ai/). After registering, access the Leap Dashboard and retrieve your API key.
 
 To find out more about the Leap Remix API, check out the [Leap Remix API reference](https://docs.tryleap.ai/reference/controlcontroller_create).
 
@@ -72,7 +72,7 @@ LEAP_API_KEY=your_api_key
 
 6. Open your browser and visit `http://localhost:3000` to see the running app.
 
-For additional guidance and instructions, refer to [the full guide](#).
+For additional guidance and instructions, refer to [the full guide](https://www.tryleap.ai/docs/how-to-build-a-sketch-to-image-app-with-leap-remix).
 
 ## Note
 
