@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 
 export const runtime = "edge";
 
-async function createFormData(image: File) {
+async function createFormData(image: File, prompt: string) {
   const formData = new FormData();
   formData.append("files", image);
-  formData.append("prompt", "A modern living room");
+  formData.append("prompt", prompt || "A hand-drawn sketch");
   formData.append("mode", "scribble");
   formData.append("numberOfImages", "4");
 
@@ -40,10 +40,10 @@ async function postImageToApi(formData: FormData) {
 
 export async function POST(request: Request) {
   // Get the incoming image from form data
-  console.log("SUBMIT");
 
   const incomingFormData = await request.formData();
   const image = incomingFormData.get("image") as File | null;
+  const prompt = incomingFormData.get("prompt") as string | null;
 
   if (!image) {
     return NextResponse.json(
@@ -52,9 +52,16 @@ export async function POST(request: Request) {
     );
   }
 
+  if (!prompt) {
+    return NextResponse.json(
+      { error: "No prompt found in request" },
+      { status: 400 }
+    );
+  }
+
   let remixId;
   try {
-    const formData = await createFormData(image);
+    const formData = await createFormData(image, prompt);
     remixId = await postImageToApi(formData);
   } catch (error: unknown) {
     if (error instanceof Error) {

@@ -17,11 +17,15 @@ interface SubmitImageResponse {
  * @param {Blob} blob - The image file to be submitted, in the form of a Blob object.
  * @returns {Promise<string | null>} A promise that resolves to the unique remixId for the submitted image, or null in case of an error.
  */
-export async function submitImage(blob: Blob): Promise<string | null> {
+export async function submitImage(
+  blob: Blob,
+  prompt: string
+): Promise<string | null> {
   try {
     // Create a new FormData instance to hold the image Blob
     const formData = new FormData();
     formData.append("image", blob); // Attach the image Blob to the form data
+    formData.append("prompt", prompt); // Attach the prompt to the form data
 
     // Configure and send a POST request to the /api/submit-remix endpoint with the FormData object
     // Set the appropriate 'Content-Type' header for submitting multipart form data

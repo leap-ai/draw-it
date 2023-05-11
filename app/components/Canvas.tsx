@@ -16,6 +16,7 @@ import { RemixImage } from "@/types/remix.type";
 import React, { useEffect, useRef, useState } from "react";
 import ImageResults from "./ImageResults";
 import { Box, Button, Flex, Stack, VStack } from "@chakra-ui/react";
+import PromptSelector, { prompts } from "./PromptSelector";
 
 interface CanvasProps {
   width: number;
@@ -29,6 +30,11 @@ const Canvas: React.FC<CanvasProps> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isPolling, setIsPolling] = useState(false);
   const [images, setImages] = useState<RemixImage[]>([]);
+
+  const [selectedPrompt, setSelectedPrompt] = useState({
+    key: "",
+    value: "",
+  });
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -47,7 +53,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
     setIsLoading(true);
     try {
       const blob = await canvasToBlob(canvasRef);
-      const remixId = await submitImage(blob);
+      const remixId = await submitImage(blob, selectedPrompt.value);
       if (!remixId) {
         alert("Something went wrong. Please try again.");
       } else {
@@ -101,20 +107,33 @@ const Canvas: React.FC<CanvasProps> = (props) => {
         ></canvas>
       </Box>
 
-      <Flex gap={2}>
-        <Button
-          onClick={handleImageSubmission}
-          isLoading={isLoading || isPolling}
-          w={"full"}
-          colorScheme="blue"
-          variant={"solid"}
-        >
-          Submit
-        </Button>
-        {!isLoading && !isPolling && (
-          <Button onClick={clearCanvas}>Clear</Button>
-        )}
-      </Flex>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleImageSubmission();
+        }}
+      >
+        <Stack>
+          <PromptSelector
+            selectedPrompt={selectedPrompt}
+            setSelectedPrompt={setSelectedPrompt}
+          />
+          <Flex gap={2}>
+            <Button
+              type="submit"
+              isLoading={isLoading || isPolling}
+              w={"full"}
+              colorScheme="blue"
+              variant={"solid"}
+            >
+              Submit
+            </Button>
+            {!isLoading && !isPolling && (
+              <Button onClick={clearCanvas}>Clear</Button>
+            )}
+          </Flex>
+        </Stack>
+      </form>
     </Stack>
   );
 };
