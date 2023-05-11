@@ -94,9 +94,9 @@ const Canvas: React.FC<CanvasProps> = (props) => {
           onTouchStart={(e) => handleTouchStart(e, drawing, canvasRef)}
           onTouchMove={(e) => handleTouchMove(e, drawing, canvasRef)}
           onTouchEnd={() => handleTouchEnd(drawing)}
-          className="cursor-crosshair"
           style={{
             touchAction: "none",
+            maxWidth: "100%",
           }}
         ></canvas>
       </Box>
