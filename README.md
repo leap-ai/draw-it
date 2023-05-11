@@ -3,6 +3,10 @@
 ![DrawIt App Banner](https://www.drawit.art/opengraph-image.jpg)
 ![DrawIt App Interface](https://www.drawit.art/demo-screenshot.jpg)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/leap-api/draw-it.git)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+![ESLint](https://img.shields.io/badge/code_style-ESLint-5ed9c7.svg)
+[![Next.js](https://img.shields.io/badge/built_with-Next.js-0070f3)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-blue)](https://www.typescriptlang.org/)
 
 DrawIt is a web application designed to convert user sketches into AI-generated images. It utilizes Next.js 13, Chakra UI, and the Leap Remix API to provide this functionality.
 
