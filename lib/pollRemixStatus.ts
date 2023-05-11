@@ -8,6 +8,7 @@ interface PollRemixStatusProps {
   modelId: string;
   remixId: string;
   updateStatus: (images: RemixImage[]) => void;
+  setIsPolling: (isPolling: boolean) => void;
 }
 
 // Polling interval in milliseconds.
@@ -22,7 +23,7 @@ const POLL_INTERVAL_MS = 3000;
  * @returns {Promise<void>}
  */
 async function checkStatus(
-  { modelId, remixId, updateStatus }: PollRemixStatusProps,
+  { modelId, remixId, updateStatus, setIsPolling }: PollRemixStatusProps,
   pollInterval: number
 ): Promise<void> {
   try {
@@ -34,9 +35,14 @@ async function checkStatus(
 
     if (status === "finished" || status === "failed") {
       updateStatus(response.data.images);
+      setIsPolling(false);
     } else if (status === "queued" || status === "processing") {
       setTimeout(
-        () => checkStatus({ modelId, remixId, updateStatus }, pollInterval),
+        () =>
+          checkStatus(
+            { modelId, remixId, updateStatus, setIsPolling },
+            pollInterval
+          ),
         pollInterval
       );
     } else {
@@ -61,7 +67,11 @@ async function checkStatus(
 export const pollRemixStatus = (
   modelId: string,
   remixId: string,
-  updateStatus: (images: RemixImage[]) => void
+  updateStatus: (images: RemixImage[]) => void,
+  setIsPolling: (isPolling: boolean) => void
 ): Promise<void> => {
-  return checkStatus({ modelId, remixId, updateStatus }, POLL_INTERVAL_MS);
+  return checkStatus(
+    { modelId, remixId, updateStatus, setIsPolling },
+    POLL_INTERVAL_MS
+  );
 };

@@ -55,7 +55,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
         const modelId = "1e7737d7-545e-469f-857f-e4b46eaa151d";
         setIsPolling(true);
         setIsLoading(false);
-        pollRemixStatus(modelId, remixId, setImages);
+        pollRemixStatus(modelId, remixId, setImages, setIsPolling);
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
