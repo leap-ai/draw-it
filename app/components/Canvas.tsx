@@ -39,16 +39,6 @@ const Canvas: React.FC<CanvasProps> = (props) => {
     }
   }, [props.height, props.width, images]);
 
-  useEffect(() => {
-    const handleScroll = (e: Event) => {
-      if (isTouching) {
-        e.preventDefault();
-      }
-    };
-
-    document.addEventListener("touchmove", handleScroll, { passive: false });
-  }, [isTouching]);
-
   const getMousePos = (e: MouseEvent, canvas: HTMLCanvasElement) => {
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
@@ -85,6 +75,8 @@ const Canvas: React.FC<CanvasProps> = (props) => {
       ctx.moveTo(mousePos.x, mousePos.y);
       drawing.current = true;
     }
+
+    handleScroll();
   };
 
   const handleMouseUp = (_e: MouseEvent) => {
@@ -113,6 +105,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
     }
 
     e.preventDefault();
+    handleScroll();
   };
 
   const handleTouchMove = (e: TouchEvent) => {
@@ -233,6 +226,29 @@ const Canvas: React.FC<CanvasProps> = (props) => {
   const clearCanvas = () => {
     setImages([]);
   };
+
+  const handleScroll = () => {
+    if (drawing.current) {
+      return;
+    }
+
+    const body = document.body;
+    body.style.overflow = "hidden";
+  };
+
+  const handleStopScrolling = () => {
+    const body = document.body;
+    body.style.overflow = "auto";
+  };
+
+  useEffect(() => {
+    document.addEventListener("mouseup", handleStopScrolling);
+    document.addEventListener("touchend", handleStopScrolling);
+    return () => {
+      document.removeEventListener("mouseup", handleStopScrolling);
+      document.removeEventListener("touchend", handleStopScrolling);
+    };
+  }, []);
 
   if (images.length > 0) {
     return (
