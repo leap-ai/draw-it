@@ -1,36 +1,38 @@
 # DrawIt - Sketch to AI-Generated Image
 
-![DrawIt App Screenshot Banner](https://www.drawit.art/opengraph-image.jpg)
+![DrawIt App Banner](https://www.drawit.art/opengraph-image.jpg)
+![DrawIt App Interface](https://www.drawit.art/demo-screenshot.jpg)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/leap-api/draw-it.git)
 
-DrawIt is a state-of-the-art web application that empowers users to transform simple sketches into AI-generated images, leveraging the power of the latest Next.js 13, Chakra UI, and Leap Remix API.
+DrawIt is a web application designed to convert user sketches into AI-generated images. It utilizes Next.js 13, Chakra UI, and the Leap Remix API to provide this functionality.
 
 ## Live Demo
 
-Explore the live demo of DrawIt at [drawit.art](https://drawit.art/).
+You can try out DrawIt with the live demo at [drawit.art](https://drawit.art/).
 
 ## Leap API
 
-Leap is a sophisticated AI platform offering a comprehensive suite of AI APIs, including the Remix API utilized in the DrawIt application. To begin using Leap, sign up for an API key at [Leap.ai](https://leap.ai/). Upon registering, access the Leap Dashboard and retrieve your API key.
+Leap is an AI platform that offers a wide range of AI APIs, including the Remix API, which is used in the DrawIt app. To get started, sign up for an API key at [Leap.ai](https://leap.ai/). After registering, access the Leap Dashboard and retrieve your API key.
 
-For further information regarding the Leap Remix API, which underpins the DrawIt app, consult the [Leap Remix API reference](https://docs.tryleap.ai/reference/controlcontroller_create).
+To find out more about the Leap Remix API, check out the [Leap Remix API reference](https://docs.tryleap.ai/reference/controlcontroller_create).
 
 ## Getting Started
 
-Follow the step-by-step instructions below to set up the DrawIt app in your local development environment:
+Follow these steps to set up DrawIt in your local development environment:
 
-1. Clone the repository using the following command:
+1. Clone the repository:
 
 ```
 git clone https://github.com/leap-api/draw-it.git
 ```
 
-2. Navigate to the `draw-it` directory:
+2. Move into the `draw-it` directory:
 
 ```
 cd draw-it
 ```
 
-3. Install the necessary dependencies:
+3. Install dependencies:
 
    For npm:
 
@@ -44,13 +46,13 @@ cd draw-it
    yarn
    ```
 
-4. Create a `.env` file at the root of the directory and replace `your_api_key` with your actual Leap API key:
+4. Create a `.env` file in the root directory and replace `your_api_key` with your actual Leap API key:
 
 ```
 LEAP_API_KEY=your_api_key
 ```
 
-5. Launch the development server:
+5. Run the development server:
 
    For npm:
 
@@ -64,14 +66,23 @@ LEAP_API_KEY=your_api_key
    yarn dev
    ```
 
-6. Open your browser and visit `http://localhost:3000` to view the running app.
+6. Open your browser and visit `http://localhost:3000` to see the running app.
 
-For a comprehensive guide and additional instructions, consult [the full guide](#).
+For additional guidance and instructions, refer to [the full guide](#).
+
+## Note
+
+DrawIt uses Next.js 13 for its app routing. If you would like to use a prior version of Next.js, please be aware that code modifications may be required.
 
 ## Contributing
 
-We welcome pull requests and contributions. For major changes, kindly open an issue first to discuss your proposed modifications.
+We welcome contributions and pull requests. For major changes, please open an issue first to discuss the proposed updates.
+
+## Resources
+
+- Discord Community: [Leap Discord](https://discord.gg/NCAKTUayPK)
+- Help Email: help@tryleap.ai
 
 ## License
 
-The DrawIt app is licensed under [MIT](https://choosealicense.com/licenses/mit/).
+The DrawIt app is licensed under the [MIT License](https://choosealicense.com/licenses/mit/).
