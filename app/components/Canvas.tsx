@@ -15,7 +15,7 @@ import { submitImage } from "@/lib/submitImage";
 import { RemixImage } from "@/types/remix.type";
 import React, { useEffect, useRef, useState } from "react";
 import ImageResults from "./ImageResults";
-import Spinner from "./ui/Spinner";
+import { Box, Button, Flex, Stack, VStack } from "@chakra-ui/react";
 
 interface CanvasProps {
   width: number;
@@ -71,50 +71,48 @@ const Canvas: React.FC<CanvasProps> = (props) => {
 
   if (images.length > 0) {
     return (
-      <div className="flex flex-col gap-2 w-full max-w-lg">
+      <VStack spacing={2} w="full" maxW="lg">
         <ImageResults images={images} />
-        <button
-          onClick={clearCanvas}
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        >
+        <Button onClick={clearCanvas} colorScheme="blue" w={"full"}>
           Try Again
-        </button>
-      </div>
+        </Button>
+      </VStack>
     );
   }
 
   return (
-    <div className="flex flex-col gap-2 w-full max-w-lg">
-      <canvas
-        ref={canvasRef}
-        width={props.width}
-        height={props.height}
-        onMouseDown={(e) => handleMouseDown(e, drawing, canvasRef)}
-        onMouseMove={(e) => handleMouseMove(e, drawing, canvasRef)}
-        onMouseUp={() => handleMouseUp(drawing)}
-        onMouseLeave={() => handleMouseLeave(drawing)}
-        onTouchStart={(e) => handleTouchStart(e, drawing, canvasRef)}
-        onTouchMove={(e) => handleTouchMove(e, drawing, canvasRef)}
-        onTouchEnd={() => handleTouchEnd(drawing)}
-        className="bg-gray-100 rounded-sm p-2 cursor-crosshair"
-      ></canvas>
-      <div className="flex gap-2">
-        <button
+    <Stack mx={"auto"}>
+      <Box bg={"gray.100"} rounded={"md"} p={2}>
+        <canvas
+          ref={canvasRef}
+          width={props.width}
+          height={props.height}
+          onMouseDown={(e) => handleMouseDown(e, drawing, canvasRef)}
+          onMouseMove={(e) => handleMouseMove(e, drawing, canvasRef)}
+          onMouseUp={() => handleMouseUp(drawing)}
+          onMouseLeave={() => handleMouseLeave(drawing)}
+          onTouchStart={(e) => handleTouchStart(e, drawing, canvasRef)}
+          onTouchMove={(e) => handleTouchMove(e, drawing, canvasRef)}
+          onTouchEnd={() => handleTouchEnd(drawing)}
+          className="cursor-crosshair"
+        ></canvas>
+      </Box>
+
+      <Flex gap={2}>
+        <Button
           onClick={handleImageSubmission}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+          isLoading={isLoading || isPolling}
+          w={"full"}
+          colorScheme="blue"
+          variant={"solid"}
         >
-          {isLoading || isPolling ? <Spinner /> : "Submit"}
-        </button>
+          Submit
+        </Button>
         {!isLoading && !isPolling && (
-          <button
-            onClick={clearCanvas}
-            className="bg-gray-300 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Clear
-          </button>
+          <Button onClick={clearCanvas}>Clear</Button>
         )}
-      </div>
-    </div>
+      </Flex>
+    </Stack>
   );
 };
 

@@ -1,21 +1,25 @@
+import { Box, Image, SimpleGrid } from "@chakra-ui/react";
 import { RemixImage } from "@/types/remix.type";
 import React from "react";
 
 export default function ImageResults({ images }: { images: RemixImage[] }) {
   return (
-    <div className="flex gap-2 flex-wrap max-w-6xl justify-center items-center">
+    <SimpleGrid
+      columns={{
+        base: 1,
+        sm: 2,
+      }}
+      spacing={2}
+      maxW="6xl"
+      m="auto"
+    >
       {images.map((image, index) => {
         return (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={image.uri}
-            alt={image.uri}
-            className="rounded-md"
-            style={{ width: "250px", height: "250px" }}
-            key={image.id}
-          />
+          <Box key={image.id} width="full" borderRadius="md" overflow="hidden">
+            <Image src={image.uri} alt={image.uri} objectFit="cover" />
+          </Box>
         );
       })}
-    </div>
+    </SimpleGrid>
   );
 }
