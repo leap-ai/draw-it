@@ -107,7 +107,6 @@ const Canvas: React.FC<CanvasProps> = (props) => {
           }}
         ></canvas>
       </Box>
-
       <form
         onSubmit={(e) => {
           e.preventDefault();

@@ -1,34 +1,77 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# DrawIt - Sketch to AI-Generated Image
+
+![DrawIt App Screenshot Banner](https://www.drawit.art/opengraph-image.jpg)
+
+DrawIt is a state-of-the-art web application that empowers users to transform simple sketches into AI-generated images, leveraging the power of the latest Next.js 13, Chakra UI, and Leap Remix API.
+
+## Live Demo
+
+Explore the live demo of DrawIt at [drawit.art](https://drawit.art/).
+
+## Leap API
+
+Leap is a sophisticated AI platform offering a comprehensive suite of AI APIs, including the Remix API utilized in the DrawIt application. To begin using Leap, sign up for an API key at [Leap.ai](https://leap.ai/). Upon registering, access the Leap Dashboard and retrieve your API key.
+
+For further information regarding the Leap Remix API, which underpins the DrawIt app, consult the [Leap Remix API reference](https://docs.tryleap.ai/reference/controlcontroller_create).
 
 ## Getting Started
 
-First, run the development server:
+Follow the step-by-step instructions below to set up the DrawIt app in your local development environment:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+1. Clone the repository using the following command:
+
+```
+git clone https://github.com/leap-api/draw-it.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Navigate to the `draw-it` directory:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+cd draw-it
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. Install the necessary dependencies:
 
-## Learn More
+   For npm:
 
-To learn more about Next.js, take a look at the following resources:
+   ```
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   For yarn:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   ```
+   yarn
+   ```
 
-## Deploy on Vercel
+4. Create a `.env` file at the root of the directory and replace `your_api_key` with your actual Leap API key:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+LEAP_API_KEY=your_api_key
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+5. Launch the development server:
+
+   For npm:
+
+   ```
+   npm run dev
+   ```
+
+   For yarn:
+
+   ```
+   yarn dev
+   ```
+
+6. Open your browser and visit `http://localhost:3000` to view the running app.
+
+For a comprehensive guide and additional instructions, consult [the full guide](#).
+
+## Contributing
+
+We welcome pull requests and contributions. For major changes, kindly open an issue first to discuss your proposed modifications.
+
+## License
+
+The DrawIt app is licensed under [MIT](https://choosealicense.com/licenses/mit/).
