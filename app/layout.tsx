@@ -4,8 +4,8 @@ import { Providers } from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Draw It",
-  description: "Sketch something and let our AI will generate an image.",
+  title: "Draw It | powered by Leap",
+  description: "Sketch something and our AI will generate an image.",
 };
 
 export default function RootLayout({

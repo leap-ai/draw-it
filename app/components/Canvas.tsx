@@ -103,6 +103,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
           style={{
             touchAction: "none",
             maxWidth: "100%",
+            cursor: "url('pen-fountain.svg') 4 28, default",
           }}
         ></canvas>
       </Box>
