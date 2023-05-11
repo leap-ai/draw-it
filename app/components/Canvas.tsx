@@ -95,6 +95,9 @@ const Canvas: React.FC<CanvasProps> = (props) => {
           onTouchMove={(e) => handleTouchMove(e, drawing, canvasRef)}
           onTouchEnd={() => handleTouchEnd(drawing)}
           className="cursor-crosshair"
+          style={{
+            touchAction: "none",
+          }}
         ></canvas>
       </Box>
 
