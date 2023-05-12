@@ -44,7 +44,7 @@ export default function Home() {
             md: "row",
           }}
         >
-          <Heading size={"xs"}>{`Build using Leap's Remix API `}</Heading>
+          <Heading size={"xs"}>{`Built using Leap's Remix API `}</Heading>
           <Button
             leftIcon={<FaGithub />}
             size={"sm"}
