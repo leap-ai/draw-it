@@ -9,7 +9,7 @@ declare global {
 
 export default function GoogleAnalytics() {
   return (
-    <div>
+    <>
       <Script
         async
         src="https://www.googletagmanager.com/gtag/js?id=G-4DQ04SP2T3"
@@ -21,6 +21,6 @@ export default function GoogleAnalytics() {
 
             gtag('config', 'G-4DQ04SP2T3');`}
       </Script>
-    </div>
+    </>
   );
 }
