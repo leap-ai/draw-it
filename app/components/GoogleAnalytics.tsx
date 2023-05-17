@@ -6,10 +6,10 @@ declare global {
   }
 }
 
-export default function GoogleAnalytics() {
-  const trackingId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
+const trackingId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
 
-  if (!trackingId) return null;
+export default function GoogleAnalytics() {
+  if (typeof trackingId !== "string") return null;
 
   return (
     <>
