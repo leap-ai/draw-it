@@ -1,5 +1,4 @@
 import Script from "next/script";
-import React from "react";
 
 declare global {
   interface Window {
@@ -8,18 +7,22 @@ declare global {
 }
 
 export default function GoogleAnalytics() {
+  const trackingId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
+
+  if (!trackingId) return null;
+
   return (
     <>
       <Script
         async
-        src="https://www.googletagmanager.com/gtag/js?id=G-4DQ04SP2T3"
+        src={`https://www.googletagmanager.com/gtag/js?id=${trackingId}`}
       ></Script>
       <Script id="ga">
         {`window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
-            gtag('config', 'G-4DQ04SP2T3');`}
+            gtag('config', '${trackingId}');`}
       </Script>
     </>
   );
