@@ -8,7 +8,7 @@
 [![Next.js](https://img.shields.io/badge/built_with-Next.js-0070f3)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-blue)](https://www.typescriptlang.org/)
 
-DrawIt is a web application designed to convert user sketches into AI-generated images. It utilizes Next.js 13, Chakra UI, and the Leap Remix API to provide this functionality.
+DrawIt is a web application designed to convert user sketches into AI-generated images. It utilizes Next.js 13, Chakra UI, and the Leap Remix API to provide this functionality..
 
 ## Live Demo
 
